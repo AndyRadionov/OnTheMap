@@ -13,6 +13,9 @@
 		A1190287246D992800C50CE7 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A1190285246D992800C50CE7 /* Main.storyboard */; };
 		A1190289246D992900C50CE7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A1190288246D992900C50CE7 /* Assets.xcassets */; };
 		A119028C246D992900C50CE7 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A119028A246D992900C50CE7 /* LaunchScreen.storyboard */; };
+		A1190297246DA39500C50CE7 /* OnTheMapClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1190296246DA39500C50CE7 /* OnTheMapClient.swift */; };
+		A1190299246DA9A000C50CE7 /* GetStudentLocationResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1190298246DA9A000C50CE7 /* GetStudentLocationResponse.swift */; };
+		A119029B246DA9B800C50CE7 /* PostStudentLocationRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = A119029A246DA9B800C50CE7 /* PostStudentLocationRequest.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +27,9 @@
 		A1190288246D992900C50CE7 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A119028B246D992900C50CE7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		A119028D246D992900C50CE7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A1190296246DA39500C50CE7 /* OnTheMapClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnTheMapClient.swift; sourceTree = "<group>"; };
+		A1190298246DA9A000C50CE7 /* GetStudentLocationResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetStudentLocationResponse.swift; sourceTree = "<group>"; };
+		A119029A246DA9B800C50CE7 /* PostStudentLocationRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostStudentLocationRequest.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,13 +64,40 @@
 			children = (
 				A119027F246D992800C50CE7 /* AppDelegate.swift */,
 				A1190281246D992800C50CE7 /* SceneDelegate.swift */,
-				A1190283246D992800C50CE7 /* ViewController.swift */,
+				A119028D246D992900C50CE7 /* Info.plist */,
+				A1190295246DA36900C50CE7 /* model */,
+				A1190294246DA35900C50CE7 /* controller */,
+				A1190293246DA33000C50CE7 /* assets */,
+			);
+			path = OnTheMap;
+			sourceTree = "<group>";
+		};
+		A1190293246DA33000C50CE7 /* assets */ = {
+			isa = PBXGroup;
+			children = (
 				A1190285246D992800C50CE7 /* Main.storyboard */,
 				A1190288246D992900C50CE7 /* Assets.xcassets */,
 				A119028A246D992900C50CE7 /* LaunchScreen.storyboard */,
-				A119028D246D992900C50CE7 /* Info.plist */,
 			);
-			path = OnTheMap;
+			path = assets;
+			sourceTree = "<group>";
+		};
+		A1190294246DA35900C50CE7 /* controller */ = {
+			isa = PBXGroup;
+			children = (
+				A1190283246D992800C50CE7 /* ViewController.swift */,
+			);
+			path = controller;
+			sourceTree = "<group>";
+		};
+		A1190295246DA36900C50CE7 /* model */ = {
+			isa = PBXGroup;
+			children = (
+				A1190296246DA39500C50CE7 /* OnTheMapClient.swift */,
+				A1190298246DA9A000C50CE7 /* GetStudentLocationResponse.swift */,
+				A119029A246DA9B800C50CE7 /* PostStudentLocationRequest.swift */,
+			);
+			path = model;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -140,7 +173,10 @@
 			files = (
 				A1190284246D992800C50CE7 /* ViewController.swift in Sources */,
 				A1190280246D992800C50CE7 /* AppDelegate.swift in Sources */,
+				A119029B246DA9B800C50CE7 /* PostStudentLocationRequest.swift in Sources */,
+				A1190297246DA39500C50CE7 /* OnTheMapClient.swift in Sources */,
 				A1190282246D992800C50CE7 /* SceneDelegate.swift in Sources */,
+				A1190299246DA9A000C50CE7 /* GetStudentLocationResponse.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
