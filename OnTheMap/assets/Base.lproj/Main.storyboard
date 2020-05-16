@@ -358,16 +358,24 @@
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="qRv-Rq-dMX">
                                 <rect key="frame" x="0.0" y="88" width="414" height="774"/>
                             </mapView>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZU9-nn-nAx">
-                                <rect key="frame" x="183" y="765" width="48" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="FINISH"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZU9-nn-nAx">
+                                <rect key="frame" x="32" y="782" width="350" height="48"/>
+                                <color key="backgroundColor" systemColor="systemBlueColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="48" id="j1t-Mb-pLU"/>
+                                </constraints>
+                                <state key="normal" title="FINISH">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
                             </button>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
+                            <constraint firstItem="rTQ-of-tyz" firstAttribute="trailing" secondItem="ZU9-nn-nAx" secondAttribute="trailing" constant="32" id="KX5-Np-L9I"/>
                             <constraint firstItem="qRv-Rq-dMX" firstAttribute="leading" secondItem="rTQ-of-tyz" secondAttribute="leading" id="Sya-rB-rFs"/>
                             <constraint firstItem="qRv-Rq-dMX" firstAttribute="top" secondItem="rTQ-of-tyz" secondAttribute="top" id="W12-Nk-YQE"/>
+                            <constraint firstItem="ZU9-nn-nAx" firstAttribute="leading" secondItem="rTQ-of-tyz" secondAttribute="leading" constant="32" id="WMF-02-oiM"/>
+                            <constraint firstItem="rTQ-of-tyz" firstAttribute="bottom" secondItem="ZU9-nn-nAx" secondAttribute="bottom" constant="32" id="pdI-Hu-uZK"/>
                             <constraint firstItem="rTQ-of-tyz" firstAttribute="trailing" secondItem="qRv-Rq-dMX" secondAttribute="trailing" id="wsA-4A-Weo"/>
                             <constraint firstItem="rTQ-of-tyz" firstAttribute="bottom" secondItem="qRv-Rq-dMX" secondAttribute="bottom" id="xVX-kk-c8t"/>
                         </constraints>
