@@ -101,7 +101,7 @@ class OnTheMapClient {
         task.resume()
     }
     
-    class func getStudentLocation(completion: @escaping ([StudentLocation], OnTheMapError?) -> Void) {
+    class func getStudentLocations(completion: @escaping ([StudentLocation], OnTheMapError?) -> Void) {
         taskForGETRequest(url: Endpoints.studentLocation.url, responseType: GetStudentLocationResponse.self) { response, error in
             if let response = response {
                 completion(response.results, nil)

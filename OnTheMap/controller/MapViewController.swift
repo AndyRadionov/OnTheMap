@@ -13,9 +13,12 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     
     @IBOutlet weak var mapView: MKMapView!
     
+    private var appDelegate: AppDelegate {
+        return UIApplication.shared.delegate as! AppDelegate
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        let appDelegate = UIApplication.shared.delegate as! AppDelegate
         if (appDelegate.studentLocations.count == 0) {
             loadStudentLocations()
         } else {
@@ -68,13 +71,12 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     }
     
     private func loadStudentLocations() {
-        OnTheMapClient.getStudentLocation { (locations, error) in
+        OnTheMapClient.getStudentLocations { (locations, error) in
             if error != nil {
                 self.showErrorAlert(error!, self)
                 return
             }
-            let appDelegate = UIApplication.shared.delegate as! AppDelegate
-            appDelegate.studentLocations = locations
+            self.appDelegate.studentLocations = locations
             self.setLocations(locations: locations)
         }
     }

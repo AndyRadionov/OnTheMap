@@ -16,8 +16,8 @@ class LoginViewController: UIViewController {
     @IBOutlet weak var signUpButton: UIButton!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         usernameTextField.text = ""
         passwordTextField.text = ""
     }
