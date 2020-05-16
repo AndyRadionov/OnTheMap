@@ -60,18 +60,18 @@ class OnTheMapClient {
     static let encoder = JSONEncoder()
     
     class func createSession(username: String, password: String, completion: @escaping (Bool, OnTheMapError?) -> Void) {
-        let body = LoginRequest(username: username, password: password)
-        taskForPOSTRequest(url: Endpoints.session.url, responseType: LoginResponse.self, body: body, completion: { (response, error) in
-            if let response = response {
-                completion(response.account?.registered ?? false, nil)
+        let body = AuthRequest(username: username, password: password)
+        taskForPOSTRequest(url: Endpoints.session.url, responseType: AuthResponse.self, body: body, completion: { (response, error) in
+            if let _ = response {
+                completion(true, nil)
             } else {
                 completion(false, error)
             }
         })
     }
     
-    class func deleteSession() {
-        var request = URLRequest(url: URL(string: "https://onthemap-api.udacity.com/v1/session")!)
+    class func deleteSession(completion: @escaping (Bool, OnTheMapError?) -> Void) {
+        var request = URLRequest(url: Endpoints.session.url)
         request.httpMethod = "DELETE"
         var xsrfCookie: HTTPCookie? = nil
         let sharedCookieStorage = HTTPCookieStorage.shared
@@ -83,12 +83,20 @@ class OnTheMapClient {
         }
         let session = URLSession.shared
         let task = session.dataTask(with: request) { data, response, error in
-          if error != nil { // Handle error…
-              return
-          }
-//          let range = Range(5..<data!.count)
-//          let newData = data?.subdata(in: range) /* subset response data! */
-//          print(String(data: newData!, encoding: .utf8)!)
+            if error != nil {
+                completion(false, .networkError)
+                return
+            }
+            
+            do {
+                let newData = data?.subdata(in: 5..<data!.count)
+                _ = try decoder.decode(AuthResponse.self, from: newData!)
+                DispatchQueue.main.async {
+                    completion(true, nil)
+                }
+            } catch {
+                completion(false, .decodeError)
+            }
         }
         task.resume()
     }
@@ -117,25 +125,6 @@ class OnTheMapClient {
         }
         task.resume()
     }
-    
-    class func putStudentLocation() {
-        let urlString = "https://onthemap-api.udacity.com/v1/StudentLocation/8ZExGR5uX8"
-        let url = URL(string: urlString)
-        var request = URLRequest(url: url!)
-        request.httpMethod = "PUT"
-        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-        request.httpBody = "{\"uniqueKey\": \"1234\", \"firstName\": \"John\", \"lastName\": \"Doe\",\"mapString\": \"Cupertino, CA\", \"mediaURL\": \"https://udacity.com\",\"latitude\": 37.322998, \"longitude\": -122.032182}".data(using: .utf8)
-        let session = URLSession.shared
-        let task = session.dataTask(with: request) { data, response, error in
-          if error != nil { // Handle error…
-              return
-          }
-          print(String(data: data!, encoding: .utf8)!)
-        }
-        task.resume()
-    }
-    
-    
     
     private class func taskForGETRequest<ResponseType: Decodable>(url: URL, responseType: ResponseType.Type, completion: @escaping (ResponseType?, OnTheMapError?) -> Void) {
         let task = URLSession.shared.dataTask(with: url) { data, response, error in

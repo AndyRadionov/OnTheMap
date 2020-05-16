@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct LoginRequest: Encodable {
+struct AuthRequest: Encodable {
     let udacity: Credentials
     
     init(username: String, password: String) {

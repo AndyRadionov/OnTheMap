@@ -102,14 +102,79 @@
             </objects>
             <point key="canvasLocation" x="-290" y="200"/>
         </scene>
-        <!--View Controller-->
+        <!--Location Table View Controller-->
         <scene sceneID="PtO-xi-SI2">
             <objects>
-                <viewController id="Yr5-xt-DI5" sceneMemberID="viewController">
+                <viewController id="Yr5-xt-DI5" customClass="LocationTableViewController" customModule="OnTheMap" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="ZLz-ag-wBr">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BHV-Ad-gzI">
+                                <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                                <items>
+                                    <navigationItem title="On the Map" id="Bhi-LR-sML">
+                                        <barButtonItem key="leftBarButtonItem" title="LOGOUT" id="zh4-fU-LUb">
+                                            <connections>
+                                                <action selector="logoutTapped:" destination="Yr5-xt-DI5" id="pwF-mr-D9X"/>
+                                            </connections>
+                                        </barButtonItem>
+                                        <rightBarButtonItems>
+                                            <barButtonItem image="addpin" id="neJ-kQ-rVU" userLabel="AddPin">
+                                                <connections>
+                                                    <action selector="addPinTapped:" destination="Yr5-xt-DI5" id="sOt-7f-UQG"/>
+                                                </connections>
+                                            </barButtonItem>
+                                            <barButtonItem image="refresh" id="Zzd-EY-yvP" userLabel="Refresh">
+                                                <connections>
+                                                    <action selector="refreshTapped:" destination="Yr5-xt-DI5" id="fHT-hw-NWN"/>
+                                                </connections>
+                                            </barButtonItem>
+                                        </rightBarButtonItems>
+                                    </navigationItem>
+                                </items>
+                            </navigationBar>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="106-c7-hzo">
+                                <rect key="frame" x="0.0" y="88" width="414" height="725"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" textLabel="X2S-FS-Ruy" detailTextLabel="11Z-X0-Zpu" style="IBUITableViewCellStyleSubtitle" id="bdc-Lx-cts">
+                                        <rect key="frame" x="0.0" y="28" width="414" height="55.5"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="bdc-Lx-cts" id="sEn-NA-3uu">
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="55.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="X2S-FS-Ruy">
+                                                    <rect key="frame" x="20" y="10" width="33.5" height="20.5"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Subtitle" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="11Z-X0-Zpu">
+                                                    <rect key="frame" x="20" y="31.5" width="44" height="14.5"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </prototypes>
+                            </tableView>
+                        </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="BHV-Ad-gzI" firstAttribute="trailing" secondItem="Z9v-pT-Rfl" secondAttribute="trailing" id="5yo-Wo-6fV"/>
+                            <constraint firstItem="Z9v-pT-Rfl" firstAttribute="trailing" secondItem="106-c7-hzo" secondAttribute="trailing" id="AeU-Dk-Xj4"/>
+                            <constraint firstItem="BHV-Ad-gzI" firstAttribute="leading" secondItem="Z9v-pT-Rfl" secondAttribute="leading" id="STd-Hl-kzH"/>
+                            <constraint firstItem="BHV-Ad-gzI" firstAttribute="top" secondItem="Z9v-pT-Rfl" secondAttribute="top" id="bmo-Bf-GqL"/>
+                            <constraint firstItem="106-c7-hzo" firstAttribute="leading" secondItem="Z9v-pT-Rfl" secondAttribute="leading" id="cLy-3M-UV7"/>
+                            <constraint firstItem="Z9v-pT-Rfl" firstAttribute="bottom" secondItem="106-c7-hzo" secondAttribute="bottom" id="ujz-bO-5NN"/>
+                            <constraint firstItem="106-c7-hzo" firstAttribute="top" secondItem="BHV-Ad-gzI" secondAttribute="bottom" id="yoj-Xe-ndg"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="Z9v-pT-Rfl"/>
                     </view>
                     <tabBarItem key="tabBarItem" title="" image="listview-deselected" selectedImage="listview-selected" id="2Ok-d0-lOu"/>
@@ -132,13 +197,40 @@
                                     <outlet property="delegate" destination="6wE-Eq-KYz" id="pGa-5d-xLF"/>
                                 </connections>
                             </mapView>
+                            <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9bl-eK-Is6">
+                                <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                                <items>
+                                    <navigationItem title="On the Map" id="jBO-HE-mKY">
+                                        <barButtonItem key="leftBarButtonItem" title="LOGOUT" id="fRq-3P-LnL">
+                                            <connections>
+                                                <action selector="logoutTapped:" destination="6wE-Eq-KYz" id="T2I-bl-OES"/>
+                                            </connections>
+                                        </barButtonItem>
+                                        <rightBarButtonItems>
+                                            <barButtonItem image="addpin" id="6gg-NI-Q2w" userLabel="AddPin">
+                                                <connections>
+                                                    <action selector="addPinTapped:" destination="6wE-Eq-KYz" id="Kjm-3z-6Wx"/>
+                                                </connections>
+                                            </barButtonItem>
+                                            <barButtonItem image="refresh" id="DlQ-Qo-TcK" userLabel="Refresh">
+                                                <connections>
+                                                    <action selector="refreshTapped:" destination="6wE-Eq-KYz" id="YsU-9M-SVo"/>
+                                                </connections>
+                                            </barButtonItem>
+                                        </rightBarButtonItems>
+                                    </navigationItem>
+                                </items>
+                            </navigationBar>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
+                            <constraint firstItem="xez-yn-hpG" firstAttribute="top" secondItem="9bl-eK-Is6" secondAttribute="bottom" constant="-44" id="1rq-s8-R8p"/>
                             <constraint firstItem="xez-yn-hpG" firstAttribute="leading" secondItem="pvn-jf-SGG" secondAttribute="leading" id="9RY-1s-SvD"/>
                             <constraint firstItem="pvn-jf-SGG" firstAttribute="trailing" secondItem="xez-yn-hpG" secondAttribute="trailing" id="JOK-6l-CbO"/>
                             <constraint firstItem="pvn-jf-SGG" firstAttribute="bottom" secondItem="xez-yn-hpG" secondAttribute="bottom" id="KEB-OJ-BQD"/>
-                            <constraint firstItem="xez-yn-hpG" firstAttribute="top" secondItem="pvn-jf-SGG" secondAttribute="top" id="tlW-Y9-1tY"/>
+                            <constraint firstItem="9bl-eK-Is6" firstAttribute="leading" secondItem="pvn-jf-SGG" secondAttribute="leading" id="PDb-Zi-80X"/>
+                            <constraint firstItem="9bl-eK-Is6" firstAttribute="trailing" secondItem="pvn-jf-SGG" secondAttribute="trailing" id="PYP-54-QKo"/>
+                            <constraint firstItem="9bl-eK-Is6" firstAttribute="top" secondItem="pvn-jf-SGG" secondAttribute="top" id="kFd-fT-CJf"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="pvn-jf-SGG"/>
                     </view>
@@ -172,10 +264,12 @@
         </scene>
     </scenes>
     <resources>
+        <image name="addpin" width="24" height="24"/>
         <image name="listview-deselected" width="75" height="50"/>
         <image name="listview-selected" width="75" height="50"/>
         <image name="logo-u" width="62" height="62"/>
         <image name="mapview-deselected" width="75" height="50"/>
         <image name="mapview-selected" width="75" height="50"/>
+        <image name="refresh" width="24" height="24"/>
     </resources>
 </document>

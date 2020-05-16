@@ -15,7 +15,12 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        loadStudentLocations()
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        if (appDelegate.studentLocations.count == 0) {
+            loadStudentLocations()
+        } else {
+            setLocations(locations: appDelegate.studentLocations)
+        }
     }
     
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
@@ -42,29 +47,54 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         }
     }
 
+    @IBAction func logoutTapped(_ sender: Any) {
+        OnTheMapClient.deleteSession { (success, error) in
+            if (error != nil) {
+                self.showErrorAlert(error!, self)
+            } else {
+                self.dismiss(animated: true, completion: nil)
+            }
+        }
+    }
+    
+    @IBAction func refreshTapped(_ sender: Any) {
+        loadStudentLocations()
+    }
+    
+    @IBAction func addPinTapped(_ sender: Any) {
+        let detailController = storyboard?.instantiateViewController(withIdentifier: "addLocationController") as! UINavigationController
+        detailController.modalPresentationStyle = UIModalPresentationStyle.fullScreen
+        navigationController?.showDetailViewController(detailController, sender: self)
+    }
+    
     private func loadStudentLocations() {
         OnTheMapClient.getStudentLocation { (locations, error) in
             if error != nil {
                 self.showErrorAlert(error!, self)
                 return
             }
-            
-            var annotations = [MKPointAnnotation]()
-            
-            for location in locations {
-                let lat = CLLocationDegrees(location.latitude)
-                let long = CLLocationDegrees(location.longitude)
-                let coordinate = CLLocationCoordinate2D(latitude: lat, longitude: long)
-                
-                let annotation = MKPointAnnotation()
-                annotation.coordinate = coordinate
-                annotation.title = "\(location.firstName) \(location.lastName)"
-                annotation.subtitle = location.mediaURL
-                
-                annotations.append(annotation)
-            }
-            
-            self.mapView.addAnnotations(annotations)
+            let appDelegate = UIApplication.shared.delegate as! AppDelegate
+            appDelegate.studentLocations = locations
+            self.setLocations(locations: locations)
         }
+    }
+    
+    private func setLocations(locations: [StudentLocation]) {
+        var annotations = [MKPointAnnotation]()
+        
+        for location in locations {
+            let lat = CLLocationDegrees(location.latitude)
+            let long = CLLocationDegrees(location.longitude)
+            let coordinate = CLLocationCoordinate2D(latitude: lat, longitude: long)
+            
+            let annotation = MKPointAnnotation()
+            annotation.coordinate = coordinate
+            annotation.title = "\(location.firstName) \(location.lastName)"
+            annotation.subtitle = location.mediaURL
+            
+            annotations.append(annotation)
+        }
+        self.mapView.removeAnnotations(self.mapView.annotations)
+        self.mapView.addAnnotations(annotations)
     }
 }

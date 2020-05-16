@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct LoginResponse: Codable {
+struct AuthResponse: Codable {
     let account: Account?
     let session: Session
 }
