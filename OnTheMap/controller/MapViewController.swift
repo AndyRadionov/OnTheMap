@@ -65,7 +65,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     }
     
     @IBAction func addPinTapped(_ sender: Any) {
-        let detailController = storyboard?.instantiateViewController(withIdentifier: "addLocationController") as! UINavigationController
+        let detailController = storyboard?.instantiateViewController(withIdentifier: "AddLocationController") as! UINavigationController
         detailController.modalPresentationStyle = UIModalPresentationStyle.fullScreen
         navigationController?.showDetailViewController(detailController, sender: self)
     }
