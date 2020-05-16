@@ -64,12 +64,6 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         loadStudentLocations()
     }
     
-    @IBAction func addPinTapped(_ sender: Any) {
-        let detailController = storyboard?.instantiateViewController(withIdentifier: "AddLocationController") as! UINavigationController
-        detailController.modalPresentationStyle = UIModalPresentationStyle.fullScreen
-        navigationController?.showDetailViewController(detailController, sender: self)
-    }
-    
     private func loadStudentLocations() {
         OnTheMapClient.getStudentLocations { (locations, error) in
             if error != nil {

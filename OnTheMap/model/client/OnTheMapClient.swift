@@ -146,6 +146,7 @@ class OnTheMapClient {
                 return
             }
             do {
+                decoder.keyDecodingStrategy = .convertFromSnakeCase
                 let newData = data.subdata(in: trimResponseIndex..<data.count)
                 let responseObject = try decoder.decode(ResponseType.self, from: newData)
                 DispatchQueue.main.async {
@@ -169,6 +170,7 @@ class OnTheMapClient {
                 return
             }
             do {
+                decoder.keyDecodingStrategy = .convertFromSnakeCase
                 let newData = data.subdata(in: 5..<data.count)
                 let responseObject = try decoder.decode(ResponseType.self, from: newData)
                 DispatchQueue.main.async {

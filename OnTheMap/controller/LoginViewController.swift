@@ -33,7 +33,9 @@ class LoginViewController: UIViewController {
     }
     
     private func handleLoginResponse(success: Bool, error: OnTheMapClient.OnTheMapError?) {
-        self.enableViews(true)
+        DispatchQueue.main.async {
+            self.enableViews(true)
+        }
         if error != nil {
             self.showErrorAlert(error!, self)
             return
