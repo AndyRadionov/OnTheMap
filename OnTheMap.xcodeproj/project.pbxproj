@@ -22,6 +22,7 @@
 		A167EB00246F11AE006CEC8C /* AuthRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = A167EAFF246F11AE006CEC8C /* AuthRequest.swift */; };
 		A167EB02246F11BD006CEC8C /* AuthResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = A167EB01246F11BD006CEC8C /* AuthResponse.swift */; };
 		A1798825247008C000D7E808 /* LocationTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1798824247008C000D7E808 /* LocationTableViewController.swift */; };
+		A17988272470289F00D7E808 /* Student.swift in Sources */ = {isa = PBXBuildFile; fileRef = A17988262470289F00D7E808 /* Student.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -42,6 +43,7 @@
 		A167EAFF246F11AE006CEC8C /* AuthRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthRequest.swift; sourceTree = "<group>"; };
 		A167EB01246F11BD006CEC8C /* AuthResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthResponse.swift; sourceTree = "<group>"; };
 		A1798824247008C000D7E808 /* LocationTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationTableViewController.swift; sourceTree = "<group>"; };
+		A17988262470289F00D7E808 /* Student.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Student.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -129,6 +131,7 @@
 				A1190298246DA9A000C50CE7 /* GetStudentLocationResponse.swift */,
 				A167EAF8246EEAC9006CEC8C /* StudentLocation.swift */,
 				A167EB01246F11BD006CEC8C /* AuthResponse.swift */,
+				A17988262470289F00D7E808 /* Student.swift */,
 			);
 			path = responses;
 			sourceTree = "<group>";
@@ -220,6 +223,7 @@
 				A119029B246DA9B800C50CE7 /* PostStudentLocationRequest.swift in Sources */,
 				A1190297246DA39500C50CE7 /* OnTheMapClient.swift in Sources */,
 				A1190282246D992800C50CE7 /* SceneDelegate.swift in Sources */,
+				A17988272470289F00D7E808 /* Student.swift in Sources */,
 				A1190299246DA9A000C50CE7 /* GetStudentLocationResponse.swift in Sources */,
 				A1798825247008C000D7E808 /* LocationTableViewController.swift in Sources */,
 				A10D65AE246DEC3100B2E284 /* MapViewController.swift in Sources */,
