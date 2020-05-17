@@ -12,8 +12,12 @@ import UIKit
 extension UIViewController {
     
     func showErrorAlert(_ error: OnTheMapClient.OnTheMapError, _ presenter: UIViewController) {
+        showAlert(title: "Error", message: error.localizedDescription, presenter: presenter)
+    }
+    
+    func showAlert(title: String, message: String, presenter: UIViewController) {
         DispatchQueue.main.async {
-            let alert = UIAlertController(title: "Error", message: error.localizedDescription, preferredStyle: .alert)
+            let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { action in
                 alert.dismiss(animated: true, completion: nil)
             }))

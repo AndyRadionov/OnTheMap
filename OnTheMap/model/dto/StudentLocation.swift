@@ -11,10 +11,9 @@ import Foundation
 struct StudentLocation: Codable {
     let firstName: String
     let lastName: String
-    let latitude: Double
     let longitude: Double
+    let latitude: Double
     let mapString: String
     let mediaURL: String
-    let objectId: String
     let uniqueKey: String
 }

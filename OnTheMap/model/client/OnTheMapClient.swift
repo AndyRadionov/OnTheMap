@@ -18,7 +18,6 @@ class OnTheMapClient {
         case session
         case signUp
         case studentLocation
-        case addStudentLocation(String)
         case getUserData(String)
         
         var stringValue: String {
@@ -28,9 +27,7 @@ class OnTheMapClient {
             case .signUp:
                 return "https://www.udacity.com/account/auth#!/signup"
             case .studentLocation:
-                return Endpoints.base + "/StudentLocation"
-            case .addStudentLocation(let objectId):
-                return Endpoints.base + "/StudentLocation/\(objectId)"
+                return Endpoints.base + "/StudentLocation?limit=100&order=-updatedAt"
             case .getUserData(let userId):
                 return Endpoints.base + "/users/\(userId)"
             }
@@ -63,7 +60,7 @@ class OnTheMapClient {
     
     class func createSession(username: String, password: String, completion: @escaping (Bool, OnTheMapError?) -> Void) {
         let body = AuthRequest(username: username, password: password)
-        taskForPOSTRequest(url: Endpoints.session.url, responseType: AuthResponse.self, body: body, completion: { (response, error) in
+        taskForPOSTRequest(url: Endpoints.session.url, trimResponseIndex: 5, responseType: AuthResponse.self, body: body, completion: { (response, error) in
             if let response = response {
                 getUserData(userId: response.account!.key, completion: completion)
             } else {
@@ -115,7 +112,7 @@ class OnTheMapClient {
     }
     
     class func getStudentLocations(completion: @escaping ([StudentLocation], OnTheMapError?) -> Void) {
-        taskForGETRequest(url: Endpoints.studentLocation.url, trimResponseIndex: 0, responseType: GetStudentLocationResponse.self) { response, error in
+        taskForGETRequest(url: Endpoints.studentLocation.url, responseType: GetStudentLocationResponse.self) { response, error in
             if let response = response {
                 completion(response.results, nil)
             } else {
@@ -124,22 +121,27 @@ class OnTheMapClient {
         }
     }
     
-    class func postStudentLocation(completion: @escaping (Bool, Error?) -> Void) {
-        var request = URLRequest(url: Endpoints.studentLocation.url)
-        request.httpMethod = "POST"
-        //request.httpBody = try! JSONEncoder().encode(body)
-        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-        let task = URLSession.shared.dataTask(with: request) { data, response, error in
+    class func postStudentLocation(longitude: Double, latitude: Double, mapString: String, link: String, completion: @escaping (Bool, OnTheMapError?) -> Void) {
+        let body = StudentLocation(
+            firstName: currentStudent.firstName,
+            lastName: currentStudent.lastName,
+            longitude: longitude,
+            latitude: latitude,
+            mapString: mapString,
+            mediaURL: link,
+            uniqueKey: currentStudent.key
+        )
+        
+        taskForPOSTRequest(url: Endpoints.studentLocation.url, responseType: AddStudentLocationResponse.self, body: body, completion: { (response, error) in
             if error != nil {
                 completion(false, error)
-                return
+            } else {
+                completion(true, error)
             }
-            completion(true, error)
-        }
-        task.resume()
+        })
     }
     
-    private class func taskForGETRequest<ResponseType: Decodable>(url: URL, trimResponseIndex: Int, responseType: ResponseType.Type, completion: @escaping (ResponseType?, OnTheMapError?) -> Void) {
+    private class func taskForGETRequest<ResponseType: Decodable>(url: URL, trimResponseIndex: Int = 0, responseType: ResponseType.Type, completion: @escaping (ResponseType?, OnTheMapError?) -> Void) {
         let task = URLSession.shared.dataTask(with: url) { data, response, error in
             guard let data = data else {
                 completion(nil, .networkError)
@@ -159,7 +161,7 @@ class OnTheMapClient {
         task.resume()
     }
     
-    private class func taskForPOSTRequest<RequestType: Encodable, ResponseType: Decodable>(url: URL, responseType: ResponseType.Type, body: RequestType, completion: @escaping (ResponseType?, OnTheMapError?) -> Void) {
+    private class func taskForPOSTRequest<RequestType: Encodable, ResponseType: Decodable>(url: URL, trimResponseIndex: Int = 0, responseType: ResponseType.Type, body: RequestType, completion: @escaping (ResponseType?, OnTheMapError?) -> Void) {
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
         request.httpBody = try! encoder.encode(body)
@@ -171,7 +173,7 @@ class OnTheMapClient {
             }
             do {
                 decoder.keyDecodingStrategy = .convertFromSnakeCase
-                let newData = data.subdata(in: 5..<data.count)
+                let newData = data.subdata(in: trimResponseIndex..<data.count)
                 let responseObject = try decoder.decode(ResponseType.self, from: newData)
                 DispatchQueue.main.async {
                     completion(responseObject, nil)
