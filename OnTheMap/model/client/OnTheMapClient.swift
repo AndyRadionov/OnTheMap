@@ -17,8 +17,9 @@ class OnTheMapClient {
         
         case session
         case signUp
-        case studentLocation
+        case studentLocations
         case getUserData(String)
+        case addLocation
         
         var stringValue: String {
             switch self {
@@ -26,10 +27,12 @@ class OnTheMapClient {
                 return Endpoints.base + "/session"
             case .signUp:
                 return "https://www.udacity.com/account/auth#!/signup"
-            case .studentLocation:
+            case .studentLocations:
                 return Endpoints.base + "/StudentLocation?limit=100&order=-updatedAt"
             case .getUserData(let userId):
                 return Endpoints.base + "/users/\(userId)"
+            case .addLocation:
+                return Endpoints.base + "/StudentLocation"
             }
         }
         
@@ -112,7 +115,7 @@ class OnTheMapClient {
     }
     
     class func getStudentLocations(completion: @escaping ([StudentLocation], OnTheMapError?) -> Void) {
-        taskForGETRequest(url: Endpoints.studentLocation.url, responseType: GetStudentLocationResponse.self) { response, error in
+        taskForGETRequest(url: Endpoints.studentLocations.url, responseType: GetStudentLocationResponse.self) { response, error in
             if let response = response {
                 completion(response.results, nil)
             } else {
@@ -132,7 +135,7 @@ class OnTheMapClient {
             uniqueKey: currentStudent.key
         )
         
-        taskForPOSTRequest(url: Endpoints.studentLocation.url, responseType: AddStudentLocationResponse.self, body: body, completion: { (response, error) in
+        taskForPOSTRequest(url: Endpoints.addLocation.url, responseType: AddStudentLocationResponse.self, body: body, completion: { (response, error) in
             if error != nil {
                 completion(false, error)
             } else {
