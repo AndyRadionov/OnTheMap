@@ -20,7 +20,7 @@ class AddLocationViewController: UIViewController {
     private var coordinate: CLLocationCoordinate2D?
     
     @IBAction func cancelTapped(_ sender: Any) {
-        self.navigationController?.dismiss(animated: true, completion: nil)
+        navigationController?.dismiss(animated: true, completion: nil)
     }
     
     @IBAction func findLocationTapped(_ sender: Any) {
