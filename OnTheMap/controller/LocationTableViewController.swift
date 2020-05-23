@@ -20,11 +20,15 @@ class LocationTableViewController: BaseLocationsViewController {
     }
     
     @IBAction func logoutTapped(_ sender: Any) {
-        ApiClient.deleteSession { (success, error) in
-            if (error != nil) {
-                self.showErrorAlert(error!, self)
+        ApiClient.deleteSession { [weak self] (success, error) in
+            guard let self = self else {
+                return
+            }
+
+            if let error = error {
+                self.showErrorAlert(error, self)
             } else {
-                self.dismiss(animated: true, completion: nil)
+                self.dismiss(animated: true)
             }
         }
     }
@@ -41,10 +45,6 @@ class LocationTableViewController: BaseLocationsViewController {
 }
 
 extension LocationTableViewController: UITableViewDataSource, UITableViewDelegate {
-    
-    func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
-    }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return appDelegate.studentLocations.count

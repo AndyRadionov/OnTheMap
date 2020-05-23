@@ -22,7 +22,7 @@ class LoginViewController: UIViewController {
         passwordTextField.text = ""
     }
     
-    @IBAction func loginTapped(_ sender: UIButton) {
+    @IBAction func loginTapped() {
         enableViews(false)
         ApiClient.createSession(username: usernameTextField.text ?? "", password: passwordTextField.text ?? "", completion: handleLoginResponse)
     }
