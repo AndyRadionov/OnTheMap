@@ -11,7 +11,7 @@ import UIKit
 
 extension UIViewController {
     
-    func showErrorAlert(_ error: OnTheMapClient.OnTheMapError, _ presenter: UIViewController) {
+    func showErrorAlert(_ error: ApiClient.ApiError, _ presenter: UIViewController) {
         showAlert(title: "Error", message: error.localizedDescription, presenter: presenter)
     }
     

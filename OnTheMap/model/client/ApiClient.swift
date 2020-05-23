@@ -8,7 +8,7 @@
 
 import Foundation
 
-class OnTheMapClient {
+class ApiClient {
     
     private static var currentStudent: Student!
     
@@ -24,15 +24,15 @@ class OnTheMapClient {
         var stringValue: String {
             switch self {
             case .session:
-                return Endpoints.base + "/session"
+                return "\(Endpoints.base)/session"
             case .signUp:
                 return "https://www.udacity.com/account/auth#!/signup"
             case .studentLocations:
-                return Endpoints.base + "/StudentLocation?limit=100&order=-updatedAt"
+                return "\(Endpoints.base)/StudentLocation?limit=100&order=-updatedAt"
             case .getUserData(let userId):
-                return Endpoints.base + "/users/\(userId)"
+                return "\(Endpoints.base)/users/\(userId)"
             case .addLocation:
-                return Endpoints.base + "/StudentLocation"
+                return "\(Endpoints.base)/StudentLocation"
             }
         }
         
@@ -41,7 +41,7 @@ class OnTheMapClient {
         }
     }
     
-    enum OnTheMapError: LocalizedError {
+    enum ApiError: LocalizedError {
         case networkError
         case loginError
         case decodeError
@@ -61,7 +61,7 @@ class OnTheMapClient {
     static let decoder = JSONDecoder()
     static let encoder = JSONEncoder()
     
-    class func createSession(username: String, password: String, completion: @escaping (Bool, OnTheMapError?) -> Void) {
+    class func createSession(username: String, password: String, completion: @escaping (Bool, ApiError?) -> Void) {
         let body = AuthRequest(username: username, password: password)
         taskForPOSTRequest(url: Endpoints.session.url, trimResponseIndex: 5, responseType: AuthResponse.self, body: body, completion: { (response, error) in
             if let response = response {
@@ -72,7 +72,7 @@ class OnTheMapClient {
         })
     }
     
-    class func deleteSession(completion: @escaping (Bool, OnTheMapError?) -> Void) {
+    class func deleteSession(completion: @escaping (Bool, ApiError?) -> Void) {
         var request = URLRequest(url: Endpoints.session.url)
         request.httpMethod = "DELETE"
         var xsrfCookie: HTTPCookie? = nil
@@ -103,7 +103,7 @@ class OnTheMapClient {
         task.resume()
     }
     
-    class func getUserData(userId: String, completion: @escaping (Bool, OnTheMapError?) -> Void) {
+    class func getUserData(userId: String, completion: @escaping (Bool, ApiError?) -> Void) {
         taskForGETRequest(url: Endpoints.getUserData(userId).url, trimResponseIndex: 5, responseType: Student.self) { response, error in
             if let response = response {
                 currentStudent = response
@@ -114,7 +114,7 @@ class OnTheMapClient {
         }
     }
     
-    class func getStudentLocations(completion: @escaping ([StudentLocation], OnTheMapError?) -> Void) {
+    class func getStudentLocations(completion: @escaping ([StudentLocation], ApiError?) -> Void) {
         taskForGETRequest(url: Endpoints.studentLocations.url, responseType: GetStudentLocationResponse.self) { response, error in
             if let response = response {
                 completion(response.results, nil)
@@ -124,7 +124,7 @@ class OnTheMapClient {
         }
     }
     
-    class func postStudentLocation(longitude: Double, latitude: Double, mapString: String, link: String, completion: @escaping (Bool, OnTheMapError?) -> Void) {
+    class func postStudentLocation(longitude: Double, latitude: Double, mapString: String, link: String, completion: @escaping (Bool, ApiError?) -> Void) {
         let body = StudentLocation(
             firstName: currentStudent.firstName,
             lastName: currentStudent.lastName,
@@ -144,7 +144,7 @@ class OnTheMapClient {
         })
     }
     
-    private class func taskForGETRequest<ResponseType: Decodable>(url: URL, trimResponseIndex: Int = 0, responseType: ResponseType.Type, completion: @escaping (ResponseType?, OnTheMapError?) -> Void) {
+    private class func taskForGETRequest<ResponseType: Decodable>(url: URL, trimResponseIndex: Int = 0, responseType: ResponseType.Type, completion: @escaping (ResponseType?, ApiError?) -> Void) {
         let task = URLSession.shared.dataTask(with: url) { data, response, error in
             guard let data = data else {
                 completion(nil, .networkError)
@@ -164,7 +164,7 @@ class OnTheMapClient {
         task.resume()
     }
     
-    private class func taskForPOSTRequest<RequestType: Encodable, ResponseType: Decodable>(url: URL, trimResponseIndex: Int = 0, responseType: ResponseType.Type, body: RequestType, completion: @escaping (ResponseType?, OnTheMapError?) -> Void) {
+    private class func taskForPOSTRequest<RequestType: Encodable, ResponseType: Decodable>(url: URL, trimResponseIndex: Int = 0, responseType: ResponseType.Type, body: RequestType, completion: @escaping (ResponseType?, ApiError?) -> Void) {
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
         request.httpBody = try! encoder.encode(body)

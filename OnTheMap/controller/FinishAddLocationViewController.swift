@@ -9,7 +9,7 @@
 import UIKit
 import MapKit
 
-class FinishAddLocationViewController: UIViewController, MKMapViewDelegate {
+class FinishAddLocationViewController: UIViewController {
 
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var finishButton: UIButton!
@@ -31,7 +31,7 @@ class FinishAddLocationViewController: UIViewController, MKMapViewDelegate {
     @IBAction func finishTapped(_ sender: Any) {
         enableViews(false)
         
-        OnTheMapClient.postStudentLocation(
+        ApiClient.postStudentLocation(
             longitude: coordinate.longitude,
             latitude: coordinate.latitude,
             mapString: mapString,
@@ -48,15 +48,6 @@ class FinishAddLocationViewController: UIViewController, MKMapViewDelegate {
         }
     }
     
-    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
-        let pinView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: nil)
-        pinView.canShowCallout = true
-        pinView.pinTintColor = .red
-        pinView.rightCalloutAccessoryView = UIButton(type: .detailDisclosure)
-        pinView.annotation = annotation
-        return pinView
-    }
-    
     private func enableViews(_ enable: Bool) {
         if enable {
             activityIndicator.stopAnimating()
@@ -68,5 +59,16 @@ class FinishAddLocationViewController: UIViewController, MKMapViewDelegate {
         mapView.isUserInteractionEnabled = enable
         navigationItem.leftBarButtonItem?.isEnabled = enable
         finishButton.isEnabled = enable
+    }
+}
+
+extension FinishAddLocationViewController: MKMapViewDelegate {
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+        let pinView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: nil)
+        pinView.canShowCallout = true
+        pinView.pinTintColor = .red
+        pinView.rightCalloutAccessoryView = UIButton(type: .detailDisclosure)
+        pinView.annotation = annotation
+        return pinView
     }
 }

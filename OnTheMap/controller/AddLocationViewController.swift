@@ -24,7 +24,6 @@ class AddLocationViewController: UIViewController {
     }
     
     @IBAction func findLocationTapped(_ sender: Any) {
-        
         if linkTextField.text!.isEmpty {
             showAlert(title: "Please fill all fields", message: "Link field is required", presenter: self)
             return

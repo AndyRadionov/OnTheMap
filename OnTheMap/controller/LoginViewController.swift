@@ -24,15 +24,15 @@ class LoginViewController: UIViewController {
     
     @IBAction func loginTapped(_ sender: UIButton) {
         enableViews(false)
-        OnTheMapClient.createSession(username: usernameTextField.text ?? "", password: passwordTextField.text ?? "", completion: handleLoginResponse)
+        ApiClient.createSession(username: usernameTextField.text ?? "", password: passwordTextField.text ?? "", completion: handleLoginResponse)
     }
     
     @IBAction func signUpTapped() {
         enableViews(false)
-        UIApplication.shared.open(OnTheMapClient.Endpoints.signUp.url, options: [:], completionHandler: nil)
+        UIApplication.shared.open(ApiClient.Endpoints.signUp.url, options: [:], completionHandler: nil)
     }
     
-    private func handleLoginResponse(success: Bool, error: OnTheMapClient.OnTheMapError?) {
+    private func handleLoginResponse(success: Bool, error: ApiClient.ApiError?) {
         DispatchQueue.main.async {
             self.enableViews(true)
         }

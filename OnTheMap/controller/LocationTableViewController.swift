@@ -8,13 +8,9 @@
 
 import UIKit
 
-class LocationTableViewController: UIViewController {
+class LocationTableViewController: BaseLocationsViewController {
 
     @IBOutlet weak var tableView: UITableView!
-    
-    private var appDelegate: AppDelegate {
-        return UIApplication.shared.delegate as! AppDelegate
-    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -24,7 +20,7 @@ class LocationTableViewController: UIViewController {
     }
     
     @IBAction func logoutTapped(_ sender: Any) {
-        OnTheMapClient.deleteSession { (success, error) in
+        ApiClient.deleteSession { (success, error) in
             if (error != nil) {
                 self.showErrorAlert(error!, self)
             } else {
@@ -38,13 +34,7 @@ class LocationTableViewController: UIViewController {
     }
     
     private func loadStudentLocations() {
-        OnTheMapClient.getStudentLocations { (locations, error) in
-            if error != nil {
-                self.showErrorAlert(error!, self)
-                return
-            }
-            self.appDelegate.studentLocations.removeAll()
-            self.appDelegate.studentLocations.append(contentsOf: locations)
+        loadStudentLocations { (studentLocations, error) in
             self.tableView.reloadData()
         }
     }

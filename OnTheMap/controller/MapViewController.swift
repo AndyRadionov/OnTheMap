@@ -9,13 +9,9 @@
 import UIKit
 import MapKit
 
-class MapViewController: UIViewController, MKMapViewDelegate {
+class MapViewController: BaseLocationsViewController {
     
     @IBOutlet weak var mapView: MKMapView!
-    
-    private var appDelegate: AppDelegate {
-        return UIApplication.shared.delegate as! AppDelegate
-    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,32 +22,8 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         }
     }
     
-    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
-        let reuseId = "pin"
-        var pinView = mapView.dequeueReusableAnnotationView(withIdentifier: reuseId) as? MKPinAnnotationView
-        if pinView == nil {
-            pinView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: reuseId)
-            pinView!.canShowCallout = true
-            pinView!.pinTintColor = .red
-            pinView!.rightCalloutAccessoryView = UIButton(type: .detailDisclosure)
-        } else {
-            pinView!.annotation = annotation
-        }
-        
-        return pinView
-    }
-
-    func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
-        if control == view.rightCalloutAccessoryView {
-            let app = UIApplication.shared
-            if let toOpen = view.annotation?.subtitle! {
-                app.open(URL(string: toOpen)!)
-            }
-        }
-    }
-
     @IBAction func logoutTapped(_ sender: Any) {
-        OnTheMapClient.deleteSession { (success, error) in
+        ApiClient.deleteSession { (success, error) in
             if (error != nil) {
                 self.showErrorAlert(error!, self)
             } else {
@@ -65,13 +37,8 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     }
     
     private func loadStudentLocations() {
-        OnTheMapClient.getStudentLocations { (locations, error) in
-            if error != nil {
-                self.showErrorAlert(error!, self)
-                return
-            }
-            self.appDelegate.studentLocations = locations
-            self.setLocations(locations: locations)
+        loadStudentLocations { (studentLocations, error) in
+            self.setLocations(locations: studentLocations)
         }
     }
     
@@ -92,5 +59,31 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         }
         self.mapView.removeAnnotations(self.mapView.annotations)
         self.mapView.addAnnotations(annotations)
+    }
+}
+
+extension MapViewController: MKMapViewDelegate {
+    
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+        let reuseId = "pin"
+        var pinView = mapView.dequeueReusableAnnotationView(withIdentifier: reuseId) as? MKPinAnnotationView
+        if pinView == nil {
+            pinView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: reuseId)
+            pinView!.canShowCallout = true
+            pinView!.pinTintColor = .red
+            pinView!.rightCalloutAccessoryView = UIButton(type: .detailDisclosure)
+        } else {
+            pinView!.annotation = annotation
+        }
+        return pinView
+    }
+
+    func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
+        if control == view.rightCalloutAccessoryView {
+            let app = UIApplication.shared
+            if let toOpen = view.annotation?.subtitle! {
+                app.open(URL(string: toOpen)!)
+            }
+        }
     }
 }
