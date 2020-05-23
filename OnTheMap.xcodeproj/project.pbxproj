@@ -105,9 +105,9 @@
 		A1190294246DA35900C50CE7 /* controller */ = {
 			isa = PBXGroup;
 			children = (
+				A1A8036F2478C54300B26EB6 /* extention */,
 				A1190283246D992800C50CE7 /* LoginViewController.swift */,
 				A10D65AD246DEC3100B2E284 /* MapViewController.swift */,
-				A167EAFD246EEE32006CEC8C /* UIViewController+Alert.swift */,
 				A1798824247008C000D7E808 /* LocationTableViewController.swift */,
 				A1798828247054AF00D7E808 /* AddLocationViewController.swift */,
 				A179882A24705B9200D7E808 /* FinishAddLocationViewController.swift */,
@@ -144,6 +144,14 @@
 				A179882C2470642500D7E808 /* AddStudentLocationResponse.swift */,
 			);
 			path = dto;
+			sourceTree = "<group>";
+		};
+		A1A8036F2478C54300B26EB6 /* extention */ = {
+			isa = PBXGroup;
+			children = (
+				A167EAFD246EEE32006CEC8C /* UIViewController+Alert.swift */,
+			);
+			path = extention;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
